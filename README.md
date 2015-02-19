@@ -11,9 +11,9 @@ Xmobar configuration is then located inside ```config``` folder.
 
 ## Sample installation
 ```
- cd <this repositor>
+ cd <this repository>
  cp src/Plugins/NetworkManager.hs <your xmobar sources>/src/Plugins/
  cp src/Config.hs <your xmobar sources>/src/ # when in doubt, edit it by yourself
- cabal install -fall_extenions
+ cabal install -fall_extensions
  xmobar config/.xmobarrc
 ```
