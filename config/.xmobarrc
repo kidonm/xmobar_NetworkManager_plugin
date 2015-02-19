@@ -1,0 +1,42 @@
+
+Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
+       , borderColor = "black"
+       , allDesktops = True
+       , overrideRedirect = False
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "gray"
+       , position = Top
+       , pickBroadest = False
+       , persistent = False
+       , lowerOnStart = True
+       , hideOnStart = False
+       , sepChar = "%"
+       , alignSep = "}{"
+
+       , template = "%uname% | %date% | %StdinReader% }{ %networkManager% | %wlan0% | %memory% | %cpu% | %battery%"
+
+       , commands = [ Run StdinReader 
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Memory ["-t", "Mem: <usedratio>%"] 10
+                    , Run NetworkManager
+                    , Run Cpu ["-L", "3", "-H", "32", "--normal", "green", "--high", "red"] 10
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Network "wlan0" ["-L", "0", "-H", "32", "--normal", "green", "--high", "red"] 10
+                    , Run Battery        [ "--template" , "Batt: <acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "darkred"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkgreen"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                             ] 50
+                    ]
+       }
